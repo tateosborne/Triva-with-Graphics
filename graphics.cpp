@@ -7,24 +7,26 @@
 
 using namespace std;
 
+enum screens {
+    welcome,
+    quizScreens,
+    summary
+};
+
 GLdouble width, height;
 int wd;
+const int MAX_POINTS = 10;
 const color white(1, 1, 1);
 const color black(0, 0, 0);
+screens currentScreen = welcome;
 
-void initPaddles() {
-}
-
-void initBall() {
-}
-
-void initBallDirection() {
-}
+Rect title(black, {400, 250}, {100, 25}, "THE QUIZ WHIZ");
 
 void init() {
     width = 800;
     height = 800;
     srand(time(nullptr));
+
 }
 
 void initGL() {
@@ -32,6 +34,18 @@ void initGL() {
 }
 
 void display() {
+    if (currentScreen == welcome) {
+        title.drawText();
+    }
+
+    else if (currentScreen == quizScreens) {
+
+    }
+
+    else if (currentScreen == summary) {
+        Rect end(black, {400, 250}, {100, 25}, "You scored" + points + "out of " + maxPoints);
+        end.drawText();
+    }
 
     glFlush();  // Render now
 }
