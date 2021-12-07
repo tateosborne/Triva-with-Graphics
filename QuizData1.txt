@@ -1,5 +1,5 @@
-Trivia Time! Five Questions, Six Points!
-5
+Trivia Time! 10 Questions, 10 Points!
+10
 Which country produces the most coffee in the world? (1 point)
 1
 5
@@ -50,8 +50,8 @@ Japan
 0
 Russia
 0
-What is the fastest aquatic animal? (2 points, finish strong!)
-2
+What is the fastest aquatic animal? (1 points, finish strong!)
+1
 5
 Dolphin
 0

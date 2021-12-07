@@ -13,6 +13,22 @@ enum screens {
     quizScreens,
     summary
 };
+enum quiz {
+    quiz1,
+    quiz2
+};
+enum question {
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    ten
+};
 
 GLdouble width, height;
 int wd;
@@ -22,9 +38,14 @@ screens currentScreen = welcome;
 
 const color white(1, 1, 1);
 const color black(0, 0, 0);
+const color lightGrey(150/255.0, 150/255.0, 150/255.0);
+const color darkGrey(128/255.0, 128/255.0, 128/255.0);
 
 Quiz q;
-Rect title(black, {400, 250}, {100, 25}, "THE QUIZ WHIZ");
+Rect title(black, {400, 250}, {100, 25}, "~ THE QUIZ WHIZ ~");
+Rect directions(black, {400, 350}, {100, 25}, "Choose Quiz or Quiz 2");
+Rect quizOneChoice(lightGrey, {250, 500}, {200, 100}, "Quiz 1");
+Rect quizTwoChoice(lightGrey, {550, 500}, {200, 100}, "Quiz 2");
 
 void init() {
     width = 800;
@@ -39,51 +60,19 @@ void initGL() {
 
 void display() {
     if (currentScreen == welcome) {
+        glViewport(0, 0, width, height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, width, height, 0.0, -1.f, 1.f);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
         title.drawText();
-    }
-
-    else if (currentScreen == quizScreens) {
-        q.takeQuiz("QuizData1.txt", cout, cin);
-
-        ifstream inFile("../scene.txt");
-        inFile >> noskipws;
-        int xCoord = 50, yCoord = 50;
-        char letter;
-        bool draw;
-        while (inFile >> letter) {
-            draw = true;
-            switch(letter) {
-                case 'r': glColor3f(0.8, 0, 0); break;
-                case 'g': glColor3f(0, 0.8,0); break;
-                case 'b': glColor3f(0, 0, 1); break;
-                case 'y': glColor3f(1, 1, 0); break;
-                case 'm': glColor3f(1, 0, 1); break;
-                case 'o': glColor3f(0.9, 0.3, 0); break;
-                case 'k': glColor3f(0, 0, 0); break;
-                case 'x': glColor3f(0.3, 0.5, 0.6); break;
-                case ' ': glColor3f(1, 1, 1); break;
-                default: // newline
-                    draw = false;
-                    xCoord = 50;
-                    yCoord += SIDE_LENGTH;
-            }
-            if (draw) {
-                glBegin(GL_QUADS);
-                glVertex2i(xCoord, yCoord);
-                glVertex2i(xCoord+SIDE_LENGTH, yCoord);
-                glVertex2i(xCoord+SIDE_LENGTH, yCoord+SIDE_LENGTH);
-                glVertex2i(xCoord, yCoord+SIDE_LENGTH);
-                glEnd();
-                xCoord += SIDE_LENGTH;
-            }
-        }
-        inFile.close();
-    }
-
-    else if (currentScreen == summary) {
-        Rect end(black, {400, 250}, {100, 25},
-                 "You scored" + to_string(points) + "out of " + to_string(MAX_POINTS));
-        end.drawText();
+        directions.drawText();
+        quizOneChoice.drawText();
+        quizTwoChoice.drawText();
     }
 
     glFlush();  // Render now
@@ -108,6 +97,16 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
+
+    if (currentScreen == welcome &&
+        x < 150 && x > 350 && y < 450 && y > 550) {
+        quizOneChoice.setColor(darkGrey);
+    }
+
+    if (currentScreen == welcome &&
+        x < 450 && x > 650 && y < 450 && y > 550) {
+        quizOneChoice.setColor(darkGrey);
+    }
 
     glutPostRedisplay();
 }

@@ -15,9 +15,6 @@ private:
     int numberOfQuestions;
     vector<Question> questions;
 
-    /* Helper function to read Quiz data from a file */
-    void readQuizFromFile(const string& filename);
-
 public:
     /* Constructor */
     Quiz();
@@ -37,6 +34,9 @@ public:
     /* Remove Question either by index or prompt */
     bool removeQuestion(int index);
     bool removeQuestion(string prompt);
+
+    /* Helper function to read Quiz data from a file */
+    void readQuizFromFile(const string& filename);
 
     /* Interactive method to have the user take the Quiz */
     void takeQuiz(string filename, ostream& outs, istream& ins);
