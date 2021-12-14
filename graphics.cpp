@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
-#include <thread>
 
 using namespace std;
 
@@ -51,6 +50,8 @@ Rect directions(black, {400, 350}, {100, 25}, "Ten questions, ten points!");
 Rect toBegin(black, {400, 600}, {200, 100}, "Press b to begin!");
 
 dimensions mainRectangle(300, 50);
+
+char choice = 'y';
 
 vector<Question> quizQuestions;
 
@@ -509,7 +510,6 @@ void display() {
         thanks.drawText();
         score.drawText();
     }
-
     glFlush();  // Render now
 }
 
@@ -738,14 +738,13 @@ void timer(int dummy) {
 }
 
 int main(int argc, char** argv) {
-
     init();
 
     glutInit(&argc, argv); // Initialize GLUT
 
     glutInitDisplayMode(GLUT_RGBA);
 
-    glutInitWindowSize((int)width, (int)height);
+    glutInitWindowSize((int) width, (int) height);
     glutInitWindowPosition(100, 200); // Position the window's initial top-left corner
 
     wd = glutCreateWindow("THE QUIZ WHIZ");
@@ -774,5 +773,6 @@ int main(int argc, char** argv) {
 
     // Enter the event-processing loop
     glutMainLoop();
+
     return 0;
 }
