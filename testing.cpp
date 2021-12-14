@@ -1,7 +1,3 @@
-//
-// Created by Tate Osborne on 10/1/21.
-//
-
 #include "Question.h"
 #include "Quiz.h"
 #include <iostream>

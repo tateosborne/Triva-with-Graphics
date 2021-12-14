@@ -29,6 +29,7 @@ file(GLOB SOURCE_FILES
         )
 
 add_executable(graphics graphics.cpp quiz.cpp question.cpp shape.cpp circle.cpp rect.cpp)
+add_executable(test testing.cpp  Question.cpp Question.h Quiz.cpp Quiz.h)
 
 if (WIN32)
     target_link_libraries (graphics ${OPENGL_LIBRARIES} freeglut)
