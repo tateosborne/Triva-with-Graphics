@@ -21,5 +21,5 @@ I believe that I should get 90 points for my final project, broken down as 35 fo
 Based on the rubric, I have completed the requirements and while I admit I didn't go super above and beyond them, I would
 argue I did more than the bare minimum. As for the 65 for functionality, everything in my program runs great and smoothly.
 It functions as intended and has interaction with the user. While, I believe I have demonstrated my understanding of these topics
-in this project, I do not thing I do think I'm shy of the full 70 points for functionality, as I think that I would need
+in this project, I do think I'm shy of the full 70 points for functionality, as I think that I would need
 more aspects to earn the full amount for this.
