@@ -49,7 +49,7 @@ color buttonColorD = steelBlue;
 
 Rect title(black, {400, 250}, {100, 25}, "~ THE QUIZ WHIZ ~");
 Rect directions(black, {400, 350}, {100, 25}, "Ten questions, ten points!");
-Rect toBegin(black, {400, 600}, {200, 100}, "Press b when you're ready!");
+Rect toBegin(black, {400, 600}, {200, 100}, "Press b to begin!");
 
 dimensions mainRectangle(300, 50);
 
@@ -134,6 +134,7 @@ void display() {
         pointsBox.drawText();
 
         if (currentQuestion == one) {
+
             Rect theQuestion(black, {400, 200}, {100, 25},
                              "1. " + quizQuestions[0].getPrompt());
             theQuestion.drawText();
@@ -144,7 +145,6 @@ void display() {
             buttonALC.drawDiamond(25, 25);
             buttonARC.drawDiamond(25, 25);
             buttonAMR.drawText();
-            this_thread::sleep_for (chrono::seconds(1));
 
             // Second choice
             Rect buttonBLC(buttonColorB, 450, 425);
@@ -153,7 +153,6 @@ void display() {
             buttonBLC.drawDiamond(25, 25);
             buttonBRC.drawDiamond(25, 25);
             buttonBMR.drawText();
-            this_thread::sleep_for (chrono::seconds(1));
 
             // Third choice
             Rect buttonCLC(buttonColorC, 50, 525);
@@ -162,7 +161,6 @@ void display() {
             buttonCLC.drawDiamond(25, 25);
             buttonCRC.drawDiamond(25, 25);
             buttonCMR.drawText();
-            this_thread::sleep_for (chrono::seconds(1));
 
             // Fourth choice
             Rect buttonDLC(buttonColorD, 450, 525);
@@ -171,7 +169,6 @@ void display() {
             buttonDLC.drawDiamond(25, 25);
             buttonDRC.drawDiamond(25, 25);
             buttonDMR.drawText();
-            this_thread::sleep_for (chrono::seconds(1));
         }
         if (currentQuestion == two) {
             Rect theQuestion(black, {400, 200}, {100, 25},
@@ -582,73 +579,33 @@ void mouse(int button, int state, int x, int y) {
         if (currentQuestion == one) {
             currentQuestion = two;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         }
     }
     if (currentScreen == quizScreens &&
@@ -663,66 +620,30 @@ void mouse(int button, int state, int x, int y) {
         if (currentQuestion == one) {
             currentQuestion = two;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
@@ -739,66 +660,30 @@ void mouse(int button, int state, int x, int y) {
         if (currentQuestion == one) {
             currentQuestion = two;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
@@ -815,66 +700,30 @@ void mouse(int button, int state, int x, int y) {
         if (currentQuestion == one) {
             currentQuestion = two;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
             i++;
-            buttonColorA = steelBlue;
-            buttonColorB = steelBlue;
-            buttonColorC = steelBlue;
-            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
