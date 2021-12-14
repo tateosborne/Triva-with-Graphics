@@ -110,6 +110,10 @@ double Rect::getBottomY() const {
     return center.y + (size.height / 2.0);
 }
 
+void Rect::setColor(color c) {
+    setColor(c);
+}
+
 void Rect::setSize(dimensions size) {
     if (size.width >= 0 && size.height >= 0) {
         this->size = size;

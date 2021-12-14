@@ -32,6 +32,7 @@ GLdouble width, height;
 int wd;
 const int MAX_POINTS = 10;
 int points = 0;
+int i = 0;
 screens currentScreen = welcome;
 questionNumber currentQuestion = one;
 
@@ -41,14 +42,14 @@ const color steelBlue(70/255.0, 130/255.0, 180/255.0);
 const color darkerSteelBlue(40/255.0, 100/255.0, 150/255.0);
 const color green(0, 0.5, 0);
 const color red(0.5, 0, 0);
-color buttonColorA;
-color buttonColorB;
-color buttonColorC;
-color buttonColorD;
+color buttonColorA = steelBlue;
+color buttonColorB = steelBlue;
+color buttonColorC = steelBlue;
+color buttonColorD = steelBlue;
 
 Rect title(black, {400, 250}, {100, 25}, "~ THE QUIZ WHIZ ~");
-Rect directions(black, {400, 350}, {100, 25}, "Ten questions, ten choices!");
-Rect toBegin(black, {400, 600}, {200, 100}, "Press b to begin!");
+Rect directions(black, {400, 350}, {100, 25}, "Ten questions, ten points!");
+Rect toBegin(black, {400, 600}, {200, 100}, "Press b when you're ready!");
 
 dimensions mainRectangle(300, 50);
 
@@ -129,9 +130,12 @@ void display() {
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+        Rect pointsBox(black, {725, 50}, {50, 50}, "Score: " + to_string(points) + "/" + to_string(i));
+        pointsBox.drawText();
+
         if (currentQuestion == one) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[0].getPrompt());
+                             "1. " + quizQuestions[0].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -140,6 +144,7 @@ void display() {
             buttonALC.drawDiamond(25, 25);
             buttonARC.drawDiamond(25, 25);
             buttonAMR.drawText();
+            this_thread::sleep_for (chrono::seconds(1));
 
             // Second choice
             Rect buttonBLC(buttonColorB, 450, 425);
@@ -148,6 +153,7 @@ void display() {
             buttonBLC.drawDiamond(25, 25);
             buttonBRC.drawDiamond(25, 25);
             buttonBMR.drawText();
+            this_thread::sleep_for (chrono::seconds(1));
 
             // Third choice
             Rect buttonCLC(buttonColorC, 50, 525);
@@ -156,6 +162,7 @@ void display() {
             buttonCLC.drawDiamond(25, 25);
             buttonCRC.drawDiamond(25, 25);
             buttonCMR.drawText();
+            this_thread::sleep_for (chrono::seconds(1));
 
             // Fourth choice
             Rect buttonDLC(buttonColorD, 450, 525);
@@ -164,10 +171,11 @@ void display() {
             buttonDLC.drawDiamond(25, 25);
             buttonDRC.drawDiamond(25, 25);
             buttonDMR.drawText();
+            this_thread::sleep_for (chrono::seconds(1));
         }
         if (currentQuestion == two) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[1].getPrompt());
+                             "2. " + quizQuestions[1].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -203,7 +211,7 @@ void display() {
         }
         if (currentQuestion == three) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[2].getPrompt());
+                             "3. " + quizQuestions[2].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -239,7 +247,7 @@ void display() {
         }
         if (currentQuestion == four) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[3].getPrompt());
+                             "4. " + quizQuestions[3].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -275,7 +283,7 @@ void display() {
         }
         if (currentQuestion == five) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[4].getPrompt());
+                             "5. " + quizQuestions[4].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -311,7 +319,7 @@ void display() {
         }
         if (currentQuestion == six) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[5].getPrompt());
+                             "6. " + quizQuestions[5].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -347,7 +355,7 @@ void display() {
         }
         if (currentQuestion == seven) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[6].getPrompt());
+                             "7. " + quizQuestions[6].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -383,7 +391,7 @@ void display() {
         }
         if (currentQuestion == eight) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[7].getPrompt());
+                             "8. " + quizQuestions[7].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -419,7 +427,7 @@ void display() {
         }
         if (currentQuestion == nine) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[8].getPrompt());
+                             "9. " + quizQuestions[8].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -455,7 +463,7 @@ void display() {
         }
         if (currentQuestion == ten) {
             Rect theQuestion(black, {400, 200}, {100, 25},
-                                quizQuestions[9].getPrompt());
+                             "10. " + quizQuestions[9].getPrompt());
             theQuestion.drawText();
             // First choice
             Rect buttonALC(buttonColorA, 50, 425);
@@ -499,6 +507,11 @@ void display() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        Rect thanks(black, {400, 300}, {200, 50}, "Thanks for playing!");
+        Rect score(black, {400, 400}, {200, 50}, "You scored " + to_string(points) + "/" + to_string(MAX_POINTS));
+        thanks.drawText();
+        score.drawText();
     }
 
     glFlush();  // Render now
@@ -511,6 +524,7 @@ void kbd(unsigned char key, int x, int y) {
         glutDestroyWindow(wd);
         exit(0);
     }
+    // b
     if (key == 98 && currentScreen == welcome) {
         currentScreen = quizScreens;
     }
@@ -559,59 +573,156 @@ void mouse(int button, int state, int x, int y) {
     if (currentScreen == quizScreens &&
             x > 25 && x < 375 && y > 400 && y < 450 &&
             button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if (quizQuestions[0].getAnswer(0).correct) {
+        if (quizQuestions[i].getAnswer(0).correct) {
             buttonColorA = green;
+            points++;
         } else {
             buttonColorA = red;
         }
         if (currentQuestion == one) {
             currentQuestion = two;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         }
     }
     if (currentScreen == quizScreens &&
             x > 425 && x < 775 && y > 400 && y < 450 &&
             button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if (quizQuestions[0].getAnswer(1).correct) {
+        if (quizQuestions[i].getAnswer(1).correct) {
             buttonColorB = green;
+            points++;
         } else {
             buttonColorB = red;
         }
         if (currentQuestion == one) {
             currentQuestion = two;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
@@ -619,29 +730,75 @@ void mouse(int button, int state, int x, int y) {
     if (currentScreen == quizScreens &&
             x > 25 && x < 375 && y > 500 && y < 550 &&
             button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if (quizQuestions[0].getAnswer(2).correct) {
+        if (quizQuestions[i].getAnswer(2).correct) {
             buttonColorC = green;
+            points++;
         } else {
             buttonColorC = red;
         }
         if (currentQuestion == one) {
             currentQuestion = two;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
@@ -649,29 +806,75 @@ void mouse(int button, int state, int x, int y) {
     if (currentScreen == quizScreens &&
             x > 425 && x < 775 && y > 500 && y < 550 &&
             button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if (quizQuestions[0].getAnswer(3).correct) {
+        if (quizQuestions[i].getAnswer(3).correct) {
             buttonColorD = green;
+            points++;
         } else {
             buttonColorD = red;
         }
         if (currentQuestion == one) {
             currentQuestion = two;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == two) {
             currentQuestion = three;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == three) {
             currentQuestion = four;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == four) {
             currentQuestion = five;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == five) {
             currentQuestion = six;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == six) {
             currentQuestion = seven;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == seven) {
             currentQuestion = eight;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == eight) {
             currentQuestion = nine;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == nine) {
             currentQuestion = ten;
+            i++;
+            buttonColorA = steelBlue;
+            buttonColorB = steelBlue;
+            buttonColorC = steelBlue;
+            buttonColorD = steelBlue;
         } else if (currentQuestion == ten) {
             currentScreen = summary;
         }
@@ -722,14 +925,6 @@ int main(int argc, char** argv) {
     glutTimerFunc(0, timer, 0);
 
     // Enter the event-processing loop
-    if (buttonColorA.red == red.red || buttonColorA.green == green.green ||
-            buttonColorB.red == red.red || buttonColorB.green == green.green ||
-            buttonColorC.red == red.red || buttonColorC.green == green.green ||
-            buttonColorD.red == red.red || buttonColorD.green == green.green) {
-//        this_thread::sleep_for(std::chrono::milliseconds(2000));
-        glutMainLoop();
-
-    }
     glutMainLoop();
     return 0;
 }

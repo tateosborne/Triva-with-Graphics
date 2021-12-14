@@ -54,6 +54,7 @@ public:
     double getBottomY() const override;
 
     /* Setters */
+    void setColor(color c);
     void setSize(dimensions size);
     void setSize(double width, double height);
     void setWidth(double width);
