@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -13,11 +15,7 @@ enum screens {
     quizScreens,
     summary
 };
-enum quiz {
-    quiz1,
-    quiz2
-};
-enum question {
+enum questionNumber {
     one,
     two,
     three,
@@ -35,23 +33,71 @@ int wd;
 const int MAX_POINTS = 10;
 int points = 0;
 screens currentScreen = welcome;
+questionNumber currentQuestion = one;
 
 const color white(1, 1, 1);
 const color black(0, 0, 0);
-const color lightGrey(150/255.0, 150/255.0, 150/255.0);
-const color darkGrey(128/255.0, 128/255.0, 128/255.0);
+const color steelBlue(70/255.0, 130/255.0, 180/255.0);
+const color darkerSteelBlue(40/255.0, 100/255.0, 150/255.0);
+const color green(0, 0.5, 0);
+const color red(0.5, 0, 0);
+color buttonColorA;
+color buttonColorB;
+color buttonColorC;
+color buttonColorD;
 
-Quiz q;
 Rect title(black, {400, 250}, {100, 25}, "~ THE QUIZ WHIZ ~");
-Rect directions(black, {400, 350}, {100, 25}, "Choose Quiz or Quiz 2");
-Rect quizOneChoice(lightGrey, {250, 500}, {200, 100}, "Quiz 1");
-Rect quizTwoChoice(lightGrey, {550, 500}, {200, 100}, "Quiz 2");
+Rect directions(black, {400, 350}, {100, 25}, "Ten questions, ten choices!");
+Rect toBegin(black, {400, 600}, {200, 100}, "Press b to begin!");
+
+dimensions mainRectangle(300, 50);
+
+vector<Question> quizQuestions;
+
+void initQuestions() {
+    quizQuestions.clear();
+
+    // Open the file
+    ifstream inFile("../QuizData1.txt");
+
+    // Read in the title and number of questions
+    int numQuestions = 0;
+    string newline;
+
+    // Read in the questions
+    Question q;
+    string message = "";
+    int number = 0;
+    bool correct = false;
+    while (inFile && quizQuestions.size() < 10) {
+        // Question Prompt
+        getline(inFile, message);
+        q.setPrompt(message);
+
+        // Clear Answers
+        q.clearAnswers();
+
+        // Answers
+        for (int i = 0; i < 4; ++i) {
+            // Read text
+            getline(inFile, message);
+            // Read correct
+            inFile >> correct;
+            getline(inFile, newline);
+            // Add answer to question
+            q.addAnswer(message, correct);
+        }
+
+        quizQuestions.push_back(q);
+    }
+    inFile.close();
+}
 
 void init() {
     width = 800;
     height = 800;
     srand(time(nullptr));
-
+    initQuestions();
 }
 
 void initGL() {
@@ -71,8 +117,388 @@ void display() {
 
         title.drawText();
         directions.drawText();
-        quizOneChoice.drawText();
-        quizTwoChoice.drawText();
+        toBegin.drawText();
+    }
+    if (currentScreen == quizScreens) {
+        glViewport(0, 0, width, height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, width, height, 0.0, -1.f, 1.f);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        if (currentQuestion == one) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[0].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[0].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[0].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[0].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[0].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == two) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[1].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[1].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[1].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[1].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[1].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == three) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[2].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[2].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[2].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[2].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[2].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == four) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[3].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[3].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[3].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[3].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[3].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == five) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[4].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[4].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[4].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[4].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[4].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == six) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[5].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[5].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[5].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[5].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[5].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == seven) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[6].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[6].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[6].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[6].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[6].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == eight) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[7].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[7].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[7].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[7].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[7].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == nine) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[8].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[8].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[8].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[8].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[8].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+        if (currentQuestion == ten) {
+            Rect theQuestion(black, {400, 200}, {100, 25},
+                                quizQuestions[9].getPrompt());
+            theQuestion.drawText();
+            // First choice
+            Rect buttonALC(buttonColorA, 50, 425);
+            Rect buttonARC(buttonColorA, 350, 425);
+            Rect buttonAMR(buttonColorA, {200, 425}, mainRectangle, quizQuestions[9].getAnswer(0).text);
+            buttonALC.drawDiamond(25, 25);
+            buttonARC.drawDiamond(25, 25);
+            buttonAMR.drawText();
+
+            // Second choice
+            Rect buttonBLC(buttonColorB, 450, 425);
+            Rect buttonBRC(buttonColorB, 750, 425);
+            Rect buttonBMR(buttonColorB, {600, 425}, mainRectangle, quizQuestions[9].getAnswer(1).text);
+            buttonBLC.drawDiamond(25, 25);
+            buttonBRC.drawDiamond(25, 25);
+            buttonBMR.drawText();
+
+            // Third choice
+            Rect buttonCLC(buttonColorC, 50, 525);
+            Rect buttonCRC(buttonColorC, 350, 525);
+            Rect buttonCMR(buttonColorC, {200, 525}, mainRectangle, quizQuestions[9].getAnswer(2).text);
+            buttonCLC.drawDiamond(25, 25);
+            buttonCRC.drawDiamond(25, 25);
+            buttonCMR.drawText();
+
+            // Fourth choice
+            Rect buttonDLC(buttonColorD, 450, 525);
+            Rect buttonDRC(buttonColorD, 750, 525);
+            Rect buttonDMR(buttonColorD, {600, 525}, mainRectangle, quizQuestions[9].getAnswer(3).text);
+            buttonDLC.drawDiamond(25, 25);
+            buttonDRC.drawDiamond(25, 25);
+            buttonDMR.drawText();
+        }
+    }
+    if (currentScreen == summary) {
+        glViewport(0, 0, width, height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, width, height, 0.0, -1.f, 1.f);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
     glFlush();  // Render now
@@ -84,6 +510,9 @@ void kbd(unsigned char key, int x, int y) {
     if (key == 27) {
         glutDestroyWindow(wd);
         exit(0);
+    }
+    if (key == 98 && currentScreen == welcome) {
+        currentScreen = quizScreens;
     }
 
     glutPostRedisplay();
@@ -98,20 +527,155 @@ void kbdS(int key, int x, int y) {
 
 void cursor(int x, int y) {
 
-    if (currentScreen == welcome &&
-        x < 150 && x > 350 && y < 450 && y > 550) {
-        quizOneChoice.setColor(darkGrey);
+    if (currentScreen == quizScreens &&
+            x > 25 && x < 375 && y > 400 && y < 450) {
+        buttonColorA = darkerSteelBlue;
+    } else {
+        buttonColorA = steelBlue;
     }
-
-    if (currentScreen == welcome &&
-        x < 450 && x > 650 && y < 450 && y > 550) {
-        quizOneChoice.setColor(darkGrey);
+    if (currentScreen == quizScreens &&
+            x > 425 && x < 775 && y > 400 && y < 450) {
+        buttonColorB = darkerSteelBlue;
+    } else {
+        buttonColorB = steelBlue;
     }
-
+    if (currentScreen == quizScreens &&
+            x > 25 && x < 375 && y > 500 && y < 550) {
+        buttonColorC = darkerSteelBlue;
+    } else {
+        buttonColorC = steelBlue;
+    }
+    if (currentScreen == quizScreens &&
+            x > 425 && x < 775 && y > 500 && y < 550) {
+        buttonColorD = darkerSteelBlue;
+    } else {
+        buttonColorD = steelBlue;
+    }
     glutPostRedisplay();
 }
 
 void mouse(int button, int state, int x, int y) {
+    // QUIZ
+    if (currentScreen == quizScreens &&
+            x > 25 && x < 375 && y > 400 && y < 450 &&
+            button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if (quizQuestions[0].getAnswer(0).correct) {
+            buttonColorA = green;
+        } else {
+            buttonColorA = red;
+        }
+        if (currentQuestion == one) {
+            currentQuestion = two;
+        } else if (currentQuestion == two) {
+            currentQuestion = three;
+        } else if (currentQuestion == three) {
+            currentQuestion = four;
+        } else if (currentQuestion == four) {
+            currentQuestion = five;
+        } else if (currentQuestion == five) {
+            currentQuestion = six;
+        } else if (currentQuestion == six) {
+            currentQuestion = seven;
+        } else if (currentQuestion == seven) {
+            currentQuestion = eight;
+        } else if (currentQuestion == eight) {
+            currentQuestion = nine;
+        } else if (currentQuestion == nine) {
+            currentQuestion = ten;
+        } else if (currentQuestion == ten) {
+            currentScreen = summary;
+        }
+    }
+    if (currentScreen == quizScreens &&
+            x > 425 && x < 775 && y > 400 && y < 450 &&
+            button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if (quizQuestions[0].getAnswer(1).correct) {
+            buttonColorB = green;
+        } else {
+            buttonColorB = red;
+        }
+        if (currentQuestion == one) {
+            currentQuestion = two;
+        } else if (currentQuestion == two) {
+            currentQuestion = three;
+        } else if (currentQuestion == three) {
+            currentQuestion = four;
+        } else if (currentQuestion == four) {
+            currentQuestion = five;
+        } else if (currentQuestion == five) {
+            currentQuestion = six;
+        } else if (currentQuestion == six) {
+            currentQuestion = seven;
+        } else if (currentQuestion == seven) {
+            currentQuestion = eight;
+        } else if (currentQuestion == eight) {
+            currentQuestion = nine;
+        } else if (currentQuestion == nine) {
+            currentQuestion = ten;
+        } else if (currentQuestion == ten) {
+            currentScreen = summary;
+        }
+    }
+    if (currentScreen == quizScreens &&
+            x > 25 && x < 375 && y > 500 && y < 550 &&
+            button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if (quizQuestions[0].getAnswer(2).correct) {
+            buttonColorC = green;
+        } else {
+            buttonColorC = red;
+        }
+        if (currentQuestion == one) {
+            currentQuestion = two;
+        } else if (currentQuestion == two) {
+            currentQuestion = three;
+        } else if (currentQuestion == three) {
+            currentQuestion = four;
+        } else if (currentQuestion == four) {
+            currentQuestion = five;
+        } else if (currentQuestion == five) {
+            currentQuestion = six;
+        } else if (currentQuestion == six) {
+            currentQuestion = seven;
+        } else if (currentQuestion == seven) {
+            currentQuestion = eight;
+        } else if (currentQuestion == eight) {
+            currentQuestion = nine;
+        } else if (currentQuestion == nine) {
+            currentQuestion = ten;
+        } else if (currentQuestion == ten) {
+            currentScreen = summary;
+        }
+    }
+    if (currentScreen == quizScreens &&
+            x > 425 && x < 775 && y > 500 && y < 550 &&
+            button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if (quizQuestions[0].getAnswer(3).correct) {
+            buttonColorD = green;
+        } else {
+            buttonColorD = red;
+        }
+        if (currentQuestion == one) {
+            currentQuestion = two;
+        } else if (currentQuestion == two) {
+            currentQuestion = three;
+        } else if (currentQuestion == three) {
+            currentQuestion = four;
+        } else if (currentQuestion == four) {
+            currentQuestion = five;
+        } else if (currentQuestion == five) {
+            currentQuestion = six;
+        } else if (currentQuestion == six) {
+            currentQuestion = seven;
+        } else if (currentQuestion == seven) {
+            currentQuestion = eight;
+        } else if (currentQuestion == eight) {
+            currentQuestion = nine;
+        } else if (currentQuestion == nine) {
+            currentQuestion = ten;
+        } else if (currentQuestion == ten) {
+            currentScreen = summary;
+        }
+    }
 
     glutPostRedisplay();
 }
@@ -158,6 +722,14 @@ int main(int argc, char** argv) {
     glutTimerFunc(0, timer, 0);
 
     // Enter the event-processing loop
+    if (buttonColorA.red == red.red || buttonColorA.green == green.green ||
+            buttonColorB.red == red.red || buttonColorB.green == green.green ||
+            buttonColorC.red == red.red || buttonColorC.green == green.green ||
+            buttonColorD.red == red.red || buttonColorD.green == green.green) {
+//        this_thread::sleep_for(std::chrono::milliseconds(2000));
+        glutMainLoop();
+
+    }
     glutMainLoop();
     return 0;
 }

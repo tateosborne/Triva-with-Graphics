@@ -68,6 +68,7 @@ public:
     /* Draw */
     void draw() const override;
     void drawText() const;
+    void drawDiamond(int deltaX, int deltaY);
 
 };
 

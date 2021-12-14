@@ -176,3 +176,15 @@ void Rect::drawText() const {
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, letter);
     }
 }
+
+void Rect::drawDiamond(int deltaX, int deltaY) {
+    glBegin(GL_QUADS);
+    glColor3f(fill.red, fill.green, fill.blue);
+    int centerX = getCenterX();
+    int centerY = getCenterY();
+    glVertex2i(centerX, centerY - deltaY);
+    glVertex2i(centerX - deltaX, centerY);
+    glVertex2i(centerX, centerY + deltaY);
+    glVertex2i(centerX + deltaX, centerY);
+    glEnd();
+}

@@ -25,6 +25,7 @@ public:
     string getPrompt() const;
     int getPoints() const;
     int getNumAnswers() const;
+    answer getAnswer(int a) const;
 
     /* Setters */
     void setPrompt(string prompt);

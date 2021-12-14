@@ -18,6 +18,10 @@ int Question::getNumAnswers() const {
     return answers.size();
 }
 
+answer Question::getAnswer(int a) const {
+    return answers[a];
+}
+
 void Question::setPrompt(string prompt) {
     this->prompt = prompt;
 }

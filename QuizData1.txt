@@ -1,8 +1,4 @@
-Trivia Time! 10 Questions, 10 Points!
-10
-Which country produces the most coffee in the world? (1 point)
-1
-5
+Which country produces the most coffee in the world?
 Brazil
 1
 Colombia
@@ -11,11 +7,7 @@ Vietnam
 0
 Guatemala
 0
-Indonesia
-0
-What is the British word for 'Zucchini'? (1 point)
-1
-4
+What is the British word for 'Zucchini'?
 Aubergine
 0
 Rocket
@@ -24,12 +16,8 @@ Courgette
 1
 Coriander
 0
-What is a group of Pandas called? (1 point)
-1
-5
+What is a group of Pandas called?
 Pride
-0
-Gang
 0
 Congress
 0
@@ -37,9 +25,7 @@ Embarrassment
 1
 Dazzle
 0
-Which country invented tea? (1 point)
-1
-5
+Which country invented tea?
 England
 0
 China
@@ -48,18 +34,57 @@ India
 0
 Japan
 0
-Russia
-0
-What is the fastest aquatic animal? (1 points, finish strong!)
+What is the fastest aquatic animal?
+Sailfish
 1
-5
-Dolphin
-0
 Bonefish
 0
 Marlin
 0
 Swordfish
 0
-Sailfish
+What is the odd one out?
+Stilton
+0
+Blue Cheese
+0
+Gorgonzola
+0
+Wensleydale
 1
+In Harry Potter, what was the name of Ron Weasley's pet rat?
+Scamper
+0
+Scabbers
+1
+Gerald
+0
+Remy
+0
+What was the first state?
+New York
+0
+Pennsylvania
+0
+Virginia
+0
+Delaware
+1
+Which country consumes the most chocolate per capita?
+Switzerland
+1
+USA
+0
+Mexico
+0
+Belgium
+0
+How many ribs are in the human body?
+16
+0
+20
+0
+24
+1
+28
+0
