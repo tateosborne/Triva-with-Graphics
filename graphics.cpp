@@ -1,5 +1,4 @@
 #include "graphics.h"
-#include "circle.h"
 #include "rect.h"
 #include "Quiz.h"
 #include <fstream>
